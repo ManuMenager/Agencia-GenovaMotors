@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Génova Motors, Bernal: usados seleccionados y 0 km, gestoría propia, financiación, permutas, compra y consignaciones."
+    />
+    <meta name="theme-color" content="#141416" />
+    <title>Génova Motors | Agencia de autos</title>
+    <!-- Pide los datos del sitio apenas se lee el HTML, en paralelo con la descarga del JavaScript,
+         en vez de esperar a que el JavaScript cargue y recién ahí llame a la API. -->
+    <link rel="preload" href="__API_URL__/api/site" as="fetch" crossorigin="anonymous" />
+    <!-- Solo en el inicio: pide la imagen principal (LCP) de inmediato, sin esperar a que cargue el JavaScript. -->
+    <script>
+      if (location.pathname === '/') {
+        var l = document.createElement('link')
+        l.rel = 'preload'
+        l.as = 'image'
+        l.type = 'image/webp'
+        l.setAttribute('imagesrcset', '/images/hero-800.webp 800w, /images/hero-1600.webp 1600w')
+        l.setAttribute('imagesizes', '100vw')
+        l.setAttribute('fetchpriority', 'high')
+        document.head.appendChild(l)
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

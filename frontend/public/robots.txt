@@ -1,0 +1,5 @@
+# robots.txt de Génova Motors
+User-agent: *
+Allow: /
+# El panel del dueño no debe aparecer en buscadores
+Disallow: /admin
