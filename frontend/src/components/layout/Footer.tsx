@@ -1,34 +1,65 @@
+import type { ReactNode } from 'react'
 import { Logo } from '@/components/ui/Logo'
 import { useContact } from '@/hooks/useContact'
 
+/**
+ * Columna de datos de contacto. Hasta que llegan los datos reales queda invisible (pero ocupando lugar),
+ * para no mostrar un número equivocado ni mover la página.
+ */
+function Column({
+  title,
+  ready,
+  className = '',
+  children,
+}: {
+  title: string
+  ready: boolean
+  className?: string
+  children: ReactNode
+}) {
+  return (
+    <div className={`text-sm ${ready ? '' : 'invisible'} ${className}`} aria-hidden={!ready}>
+      <p className="font-semibold text-white">{title}</p>
+      <div className="mt-3 space-y-1.5">{children}</div>
+    </div>
+  )
+}
+
 export function Footer() {
-  const { ready, address, hours, email, whatsappDisplay, whatsappLink } = useContact()
+  const { ready, address, hours, email, whatsappDisplay, whatsappLink, mapsUrl } = useContact()
 
   return (
     <footer className="border-t border-line bg-surface text-zinc-400">
-      <div className="grid gap-6 px-4 py-8 text-center sm:gap-8 sm:py-12 sm:px-8 md:grid-cols-3 md:text-left lg:px-16">
-        <div>
+      {/* Marca a la izquierda y tres columnas de igual peso: así ninguna queda mucho más alta que otra. */}
+      <div className="grid grid-cols-2 gap-x-4 gap-y-8 px-4 py-6 text-center sm:px-8 md:grid-cols-3 md:text-left lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10 lg:px-16 lg:py-8">
+        <div className="col-span-2 md:col-span-3 lg:col-span-1">
           <Logo className="mx-auto w-56 md:mx-0" sizes="224px" lazy />
-          <p className="mt-4 text-sm">
+          <p className="mx-auto mt-4 max-w-xs text-sm md:mx-0">
             Usados seleccionados &amp; 0 km. Gestoría propia. Financiación, permutas, compra y
             consignaciones.
           </p>
         </div>
-        {/* Invisible (pero ocupando lugar) hasta que llegan los datos reales, para no mostrar un número equivocado ni mover la página. */}
-        <div className={ready ? 'text-sm' : 'invisible text-sm'} aria-hidden={!ready}>
-          <p className="font-semibold text-white">Visitanos</p>
-          <p className="mt-2">{address}</p>
-          {hours.map((h, i) => (
-            <p key={h} className={i === 0 ? 'mt-2' : ''}>
-              {h}
-            </p>
+
+        <Column title="Dirección" ready={ready}>
+          <p>{address}</p>
+          <a
+            href={mapsUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-block font-semibold text-brand-400 hover:text-brand-500"
+          >
+            Cómo llegar →
+          </a>
+        </Column>
+
+        <Column title="Horarios" ready={ready}>
+          {hours.map((h) => (
+            <p key={h}>{h}</p>
           ))}
-        </div>
-        {/* Invisible (pero ocupando lugar) hasta que llegan los datos reales, para no mostrar un número equivocado ni mover la página. */}
-        <div className={ready ? 'text-sm' : 'invisible text-sm'} aria-hidden={!ready}>
-          <p className="font-semibold text-white">Contacto</p>
-          <p className="mt-2">
-            WhatsApp:{' '}
+        </Column>
+
+        <Column title="Contacto" ready={ready} className="col-span-2 md:col-span-1">
+          <p>
             <a
               href={whatsappLink('Hola! Quiero hacer una consulta.')}
               target="_blank"
@@ -36,16 +67,18 @@ export function Footer() {
               className="font-semibold text-brand-400 hover:text-brand-500"
             >
               {whatsappDisplay}
-            </a>
+            </a>{' '}
+            <span className="whitespace-nowrap">(WhatsApp)</span>
           </p>
-          <p className="mt-1">
-            <a href={`mailto:${email}`} className="hover:text-white">
+          <p>
+            <a href={`mailto:${email}`} className="break-all hover:text-white">
               {email}
             </a>
           </p>
-        </div>
+        </Column>
       </div>
-      <p className="border-t border-line py-4 text-center text-xs">
+
+      <p className="border-t border-line py-3 text-center text-xs">
         © {new Date().getFullYear()} Génova Motors. Todos los derechos reservados.
       </p>
     </footer>
