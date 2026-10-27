@@ -1,6 +1,6 @@
 import path from 'node:path'
 import sharp from 'sharp'
-import { config } from './config.js'
+import { config } from '../config/index.js'
 
 export interface ImageSize {
   width: number
@@ -8,7 +8,7 @@ export interface ImageSize {
 }
 
 // Las fotos estáticas viven en el frontend (public/images); las subidas desde el panel, en uploads/.
-const staticRoot = path.resolve(import.meta.dirname, '..', '..', 'frontend', 'public')
+const staticRoot = path.resolve(import.meta.dirname, '..', '..', '..', 'frontend', 'public')
 
 // Los archivos no cambian (las subidas tienen nombre único), así que alcanza con leerlos una vez.
 const cache = new Map<string, ImageSize | null>()

@@ -8,6 +8,9 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "typecheck": "tsc --noEmit",
+    "db:migrate": "tsx src/database/cli.ts migrate",
+    "db:seed": "tsx src/database/cli.ts seed",
+    "db:setup": "tsx src/database/cli.ts setup",
     "variants": "node scripts/make-variants.mjs"
   },
   "dependencies": {
@@ -16,6 +19,7 @@
     "express": "^5.3.0",
     "helmet": "^8.3.0",
     "multer": "^2.5.0",
+    "pg": "^8.23.1",
     "sharp": "^0.35.5",
     "zod": "^4.6.7"
   },
@@ -24,6 +28,7 @@
     "@types/express": "^5.0.6",
     "@types/multer": "^2.3.0",
     "@types/node": "^26.6.5",
+    "@types/pg": "^8.23.1",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2"
   }

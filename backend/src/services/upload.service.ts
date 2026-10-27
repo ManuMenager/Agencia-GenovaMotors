@@ -1,16 +1,9 @@
 import { randomBytes } from 'node:crypto'
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
-import multer from 'multer'
 import sharp from 'sharp'
-import { config } from './config.js'
-import { encodeWebp, WEBP_VARIANTS } from './webp.js'
-
-export const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 12 * 1024 * 1024, files: 12 },
-  fileFilter: (_req, file, cb) => cb(null, /^image\/(jpeg|png|webp)$/.test(file.mimetype)),
-})
+import { config } from '../config/index.js'
+import { encodeWebp, WEBP_VARIANTS } from '../utils/webp.js'
 
 /**
  * Procesa una foto subida y devuelve la URL pública de la versión principal (JPEG de hasta 1600 px).

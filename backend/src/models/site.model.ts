@@ -1,5 +1,3 @@
-import type { Vehicle } from './vehicle.js'
-
 /** Datos del sitio que el dueño puede modificar desde el panel. */
 export interface SiteSettings {
   address: string
@@ -8,11 +6,4 @@ export interface SiteSettings {
   email: string
   /** Una línea por franja horaria. */
   hours: string[]
-}
-
-export interface Db {
-  vehicles: Vehicle[]
-  /** Fotos de la sección Clientes, en orden. */
-  clients: string[]
-  settings: SiteSettings
 }
